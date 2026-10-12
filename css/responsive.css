@@ -1,0 +1,139 @@
+/* ==========================================================================
+   EDS — Responsive Layer
+   ========================================================================== */
+
+/* ---- Grids shared across pages (mobile-first base lives here) ---- */
+.grid-2{ display:grid; grid-template-columns:1fr; gap:28px; }
+.grid-3{ display:grid; grid-template-columns:1fr; gap:26px; }
+.grid-4{ display:grid; grid-template-columns:1fr; gap:22px; }
+.grid-hero{ display:grid; grid-template-columns:1fr; gap:44px; align-items:center; }
+.grid-split{ display:grid; grid-template-columns:1fr; gap:40px; align-items:center; }
+
+.masonry{ column-count:1; column-gap:18px; }
+.masonry > *{ break-inside:avoid; margin-bottom:18px; }
+
+@media (min-width:640px){
+  .grid-2{ grid-template-columns:repeat(2,1fr); }
+  .grid-4{ grid-template-columns:repeat(2,1fr); }
+  .masonry{ column-count:2; }
+}
+
+@media (min-width:900px){
+  .nav-links{ display:flex; }
+  .nav-actions .hamburger{ display:none; }
+  .grid-3{ grid-template-columns:repeat(3,1fr); }
+  .grid-4{ grid-template-columns:repeat(4,1fr); }
+  .grid-hero{ grid-template-columns:1.1fr .9fr; gap:56px; }
+  .grid-split{ grid-template-columns:1fr 1fr; gap:64px; }
+  .masonry{ column-count:3; }
+  .footer-grid{ grid-template-columns:1.4fr 1fr 1fr 1fr; }
+}
+
+@media (max-width:899px){
+  .nav-links{ display:none; }
+}
+
+@media (min-width:1100px){
+  .grid-hero{ grid-template-columns:1.15fr .85fr; }
+}
+
+/* ---- Mobile nav / actions ---- */
+@media (min-width:900px){ .nav-actions .lang-switch{ display:flex; } }
+@media (max-width:899px){
+  .lang-switch{ display:none; }
+  .mobile-menu-foot .lang-switch{ display:flex; }
+}
+
+/* ---- Mobile navbar: keep the brand, logo and hamburger comfortable and
+   overlap-free from 320px up. Desktop identity (>=900px) is untouched. ---- */
+@media (max-width:899px){
+  .site-nav .container{ gap:10px; }
+  .brand{ gap:9px; min-width:0; }
+  .brand img{ height:32px; }
+  .site-nav.scrolled .brand img{ height:30px; }
+  .brand-text{ min-width:0; }
+  .brand-text strong{ font-size:1rem; }
+  .nav-actions{ gap:8px; }
+}
+@media (max-width:380px){
+  .brand-text small{ display:none; }
+}
+@media (max-width:340px){
+  .brand-text strong{ font-size:.92rem; }
+  .hamburger{ width:40px; height:40px; }
+}
+
+/* ---- Prevent horizontal overflow globally ---- */
+html, body{ max-width:100%; overflow-x:hidden; }
+.container{ width:100%; }
+
+/* ---- Touch target comfort on mobile ---- */
+@media (max-width:640px){
+  .btn{ padding:15px 24px; font-size:.95rem; }
+  h1{ font-size:clamp(2.1rem,9vw,2.8rem); }
+}
+
+/* ---- Compact, card-based footer on phones and tablets ---- */
+@media (max-width:899px){
+  .site-footer{ padding:48px 0 22px; }
+  .footer-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+  }
+  .site-footer .footer-grid > div:first-child{
+    grid-column:1 / -1;
+    padding:22px;
+    border:1px solid rgba(36,119,234,.12);
+    border-radius:24px;
+    background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(225,247,248,.72));
+    box-shadow:0 16px 36px -28px rgba(20,85,194,.45);
+  }
+  .footer-brand{ margin-bottom:10px; }
+  .footer-brand img{ height:38px; }
+  .footer-tagline{ margin-bottom:0; font-size:.92rem; line-height:1.55; }
+  .site-footer .footer-grid > div:first-child .lang-switch{ margin-top:14px !important; }
+  .footer-col{
+    min-width:0;
+    padding:18px 15px;
+    border:1px solid rgba(36,119,234,.1);
+    border-radius:20px;
+    background:rgba(255,255,255,.68);
+    box-shadow:0 12px 28px -26px rgba(20,85,194,.4);
+  }
+  .footer-col h4{ margin-bottom:10px; font-size:.76rem; }
+  .footer-col a, .footer-col p{
+    padding:7px 0;
+    font-size:.86rem;
+    line-height:1.45;
+    overflow-wrap:anywhere;
+  }
+  .footer-col a::before{
+    content:'';
+    display:inline-block;
+    width:6px;
+    height:6px;
+    margin:0 8px 2px 0;
+    border-radius:50%;
+    background:var(--c-cyan);
+  }
+  [dir="rtl"] .footer-col a::before{ margin:0 0 2px 8px; }
+  .site-footer .footer-grid > .footer-col:last-child{ grid-column:1 / -1; }
+  .footer-col .social-row{ margin-top:10px !important; }
+  .footer-col .social-row a{ width:42px; height:42px; }
+  .footer-col .social-row a::before{ display:none; }
+  .footer-bottom{
+    margin-top:22px;
+    padding-top:18px;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:4px;
+    font-size:.78rem;
+  }
+  .footer-bottom p{ margin:0; }
+}
+
+@media (max-width:380px){
+  .site-footer .footer-grid > div:first-child{ padding:18px; }
+  .footer-col{ padding:16px 12px; }
+  .footer-col a, .footer-col p{ font-size:.82rem; }
+}

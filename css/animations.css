@@ -1,0 +1,127 @@
+/* ==========================================================================
+   EDS — Animation Language
+   Purposeful motion: reveals, flow, glow. Respects prefers-reduced-motion.
+   ========================================================================== */
+
+@keyframes float-y{
+  0%,100%{ transform:translateY(0) translateX(0); }
+  50%{ transform:translateY(-22px) translateX(10px); }
+}
+@keyframes float-y-slow{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-34px); }
+}
+@keyframes blob-drift{
+  0%{ transform:translate(0,0) scale(1); }
+  33%{ transform:translate(30px,-24px) scale(1.08); }
+  66%{ transform:translate(-24px,18px) scale(.96); }
+  100%{ transform:translate(0,0) scale(1); }
+}
+@keyframes gradient-pan{
+  0%{ background-position:0% 50%; }
+  50%{ background-position:100% 50%; }
+  100%{ background-position:0% 50%; }
+}
+@keyframes spin-slow{ to{ transform:rotate(360deg); } }
+@keyframes pulse-glow{
+  0%,100%{ box-shadow:0 0 0 0 rgba(33,199,224,.35); }
+  50%{ box-shadow:0 0 0 16px rgba(33,199,224,0); }
+}
+@keyframes fade-up{
+  from{ opacity:0; transform:translateY(24px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+@keyframes fade-in{
+  from{ opacity:0; } to{ opacity:1; }
+}
+@keyframes scale-in{
+  from{ opacity:0; transform:scale(.92); } to{ opacity:1; transform:scale(1); }
+}
+@keyframes draw-line{
+  from{ stroke-dashoffset:1000; } to{ stroke-dashoffset:0; }
+}
+@keyframes shimmer{
+  0%{ background-position:-200% 0; } 100%{ background-position:200% 0; }
+}
+@keyframes ticker-marquee{
+  from{ transform:translateX(0); } to{ transform:translateX(-50%); }
+}
+[dir="rtl"] .marquee-track{ animation-direction:reverse; }
+
+.blob{ animation:blob-drift 22s ease-in-out infinite; }
+.blob.b2{ animation-duration:26s; animation-delay:-6s; }
+.blob.b3{ animation-duration:18s; animation-delay:-3s; }
+
+.float{ animation:float-y 7s ease-in-out infinite; }
+.float-slow{ animation:float-y-slow 10s ease-in-out infinite; }
+
+.grad-anim{
+  background-size:200% 200%;
+  animation:gradient-pan 10s ease infinite;
+}
+
+.hero-enter > *{ animation:fade-up .9s var(--ease) both; }
+.hero-enter > *:nth-child(1){ animation-delay:.05s; }
+.hero-enter > *:nth-child(2){ animation-delay:.18s; }
+.hero-enter > *:nth-child(3){ animation-delay:.32s; }
+.hero-enter > *:nth-child(4){ animation-delay:.46s; }
+.hero-enter > *:nth-child(5){ animation-delay:.6s; }
+
+.stagger .reveal:nth-child(1){ transition-delay:0s; }
+.stagger .reveal:nth-child(2){ transition-delay:.08s; }
+.stagger .reveal:nth-child(3){ transition-delay:.16s; }
+.stagger .reveal:nth-child(4){ transition-delay:.24s; }
+.stagger .reveal:nth-child(5){ transition-delay:.32s; }
+.stagger .reveal:nth-child(6){ transition-delay:.4s; }
+
+.reveal-scale{ opacity:0; transform:scale(.94); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal-scale.in{ opacity:1; transform:scale(1); }
+
+/* ---- Section headings: eyebrow → heading → description, staggered ---- */
+.reveal-head > *{
+  opacity:0; transform:translateY(16px);
+  transition:opacity .7s var(--ease), transform .7s var(--ease);
+}
+.reveal-head.in > *{ opacity:1; transform:none; }
+.reveal-head.in > *:nth-child(1){ transition-delay:0s; }
+.reveal-head.in > *:nth-child(2){ transition-delay:.12s; }
+.reveal-head.in > *:nth-child(3){ transition-delay:.24s; }
+
+/* ---- Masked image reveal (clip-path wipe, not a simple fade) ---- */
+.clip-reveal{
+  clip-path:inset(0 0 100% 0);
+  transition:clip-path 1s var(--ease);
+}
+.clip-reveal.in{ clip-path:inset(0 0 0% 0); }
+
+@media (prefers-reduced-motion: reduce){
+  .reveal-head > *{ opacity:1; transform:none; transition:none; }
+  .clip-reveal{ clip-path:inset(0); transition:none; }
+}
+
+.reveal-left{ opacity:0; transform:translateX(-32px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
+[dir="rtl"] .reveal-left{ transform:translateX(32px); }
+.reveal-left.in{ opacity:1; transform:none; }
+
+.reveal-right{ opacity:0; transform:translateX(32px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
+[dir="rtl"] .reveal-right{ transform:translateX(-32px); }
+.reveal-right.in{ opacity:1; transform:none; }
+
+.pulse{ animation:pulse-glow 2.6s ease-in-out infinite; }
+
+.spin-slow{ animation:spin-slow 40s linear infinite; }
+
+.timeline-line path{
+  stroke-dasharray:1000; stroke-dashoffset:1000;
+  transition:stroke-dashoffset 1.6s var(--ease);
+}
+.timeline-line.in path{ stroke-dashoffset:0; }
+
+/* magnetic button micro-interaction handled via JS transform, transition here */
+.magnetic > *{ transition:transform .25s var(--ease); }
+
+@media (prefers-reduced-motion: reduce){
+  .blob, .float, .float-slow, .grad-anim, .pulse, .spin-slow,
+  .hero-enter > *{ animation:none !important; }
+  .reveal, .reveal-scale, .reveal-left, .reveal-right{ transition:none !important; }
+}
