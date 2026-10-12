@@ -14,50 +14,6 @@
 
   function getCurtain(){ return document.querySelector('.page-transition'); }
 
-  function initWaveMotion(){
-    if(reduceMotion) return;
-    var waves = document.querySelectorAll('.loader-wave');
-    if(waves.length !== 2) return;
-
-    var approachDuration = 720;
-    var spiralDuration = 420;
-    var orbitDuration = 2800;
-    var startTime = null;
-    var startAngle = Math.atan2(20, -52);
-    var turn = Math.PI * 2;
-
-    function placeWave(wave, x, y){
-      wave.setAttribute('transform', 'translate(' + x.toFixed(2) + ' ' + y.toFixed(2) + ')');
-    }
-
-    function animateWaves(now){
-      if(startTime === null) startTime = now;
-      var elapsed = now - startTime;
-      var radius;
-      var angle;
-
-      if(elapsed < approachDuration){
-        var approach = elapsed / approachDuration;
-        var easeInOut = approach * approach * (3 - 2 * approach);
-        radius = 56 * (1 - easeInOut);
-        angle = startAngle + (Math.PI - startAngle) * easeInOut;
-      }else{
-        var orbitElapsed = elapsed - approachDuration;
-        var orbitProgress = orbitElapsed / orbitDuration;
-        var spiral = Math.min(orbitElapsed / spiralDuration, 1);
-        var spiralEase = spiral * spiral * (3 - 2 * spiral);
-        radius = 34 * spiralEase;
-        angle = Math.PI + orbitProgress * turn;
-      }
-
-      placeWave(waves[0], radius * Math.cos(angle), radius * Math.sin(angle));
-      placeWave(waves[1], -radius * Math.cos(angle), -radius * Math.sin(angle));
-      requestAnimationFrame(animateWaves);
-    }
-
-    requestAnimationFrame(animateWaves);
-  }
-
   function openOnLoad(){
     var curtain = getCurtain();
     if(!curtain) return;
@@ -117,7 +73,6 @@
 
   // Open the curtain as soon as markup is parsed so the reveal feels instant.
   document.addEventListener('DOMContentLoaded', function(){
-    initWaveMotion();
     openOnLoad();
     initLinkIntercept();
   });
